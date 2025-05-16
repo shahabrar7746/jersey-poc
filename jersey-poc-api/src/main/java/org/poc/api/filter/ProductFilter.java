@@ -24,11 +24,11 @@ public class ProductFilter {
     private List<@Past(message = "Created date must be lesser than day") LocalDate> createdBeforeDate;
     private boolean createdBeforeDateSet;
 
-
+    @Valid
     private List<@Positive(message = "Price must be integer and positive") Integer> priceLessThan;
     private boolean priceLessThanSet;
 
-
+    @Valid
     private List<@Positive(message = "Price must be integer and positive") Integer> priceGreaterThan;
     private boolean priceGreaterThanSet;
 
@@ -44,6 +44,8 @@ public class ProductFilter {
     private List<String> columns;
     private boolean columnsSet;
 
+
+    private boolean priceNullOrUnAvailable;
 
     public List<LocalDate> getCreatedAfterDate() {
         if (createdAfterDate == null || createdAfterDate.isEmpty()) {
@@ -185,4 +187,12 @@ public class ProductFilter {
     public boolean isColumnsSet() {
         return columnsSet;
     }
+    public boolean isPriceNullOrUnAvailable() {
+        return priceNullOrUnAvailable;
+    }
+
+    public void setPriceNullOrUnAvailable(boolean priceNullOrUnAvailable) {
+        this.priceNullOrUnAvailable = priceNullOrUnAvailable;
+    }
+
 }
