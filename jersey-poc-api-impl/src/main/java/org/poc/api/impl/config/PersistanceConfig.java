@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Configuration;
 public class PersistanceConfig {
 
 
-    @Bean
-    public EntityManager getEntityManager() {
-
-        EntityManager entityManager = Persistence
-                .createEntityManagerFactory("myPersistenceUnit")
-                .createEntityManager();
-        return entityManager;
-
-    }
+//    @Bean
+//    public EntityManager getEntityManager() {
+//
+//        EntityManager entityManager = Persistence
+//                .createEntityManagerFactory("myPersistenceUnit")
+//                .createEntityManager();
+//        return entityManager;
+//
+//    }
 }

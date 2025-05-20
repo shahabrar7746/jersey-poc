@@ -1,198 +1,150 @@
 package org.poc.api.filter;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
-import org.springframework.format.annotation.DateTimeFormat;
+import jakarta.ws.rs.QueryParam;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ProductFilter {
 
+    @QueryParam("created-after")
+    @PastOrPresent(message = "Date must be less or equal to today's date")
+    private LocalDate createdAfterDate;
 
-    @Valid
-    private List<@PastOrPresent(message = "Date must be lessser or equals to today's date") LocalDate> createdAfterDate;
-    private boolean createdAfterDateSet;
+    @QueryParam("created-on-year")
+    @Positive(message = "Year must be integer and positive")
+    private Integer createdOnYear;
 
-    @Valid
-    private List<@Positive(message = "Year must be integer and positive") Integer> createdOnYear;
-    private boolean createdOnYearSet;
+    @QueryParam("created-before")
+    @Past(message = "Created date must be less than today")
+    private LocalDate createdBeforeDate;
 
-    @Valid
-    private List<@Past(message = "Created date must be lesser than day") LocalDate> createdBeforeDate;
-    private boolean createdBeforeDateSet;
+    @QueryParam("price-less-than")
+    @Positive(message = "Price must be integer and positive")
+    private Integer priceLessThan;
 
-    @Valid
-    private List<@Positive(message = "Price must be integer and positive") Integer> priceLessThan;
-    private boolean priceLessThanSet;
+    @QueryParam("price-greater-than")
+    @Positive(message = "Price must be integer and positive")
+    private Integer priceGreaterThan;
 
-    @Valid
-    private List<@Positive(message = "Price must be integer and positive") Integer> priceGreaterThan;
-    private boolean priceGreaterThanSet;
+    @QueryParam("category")
+    private String category;
 
-    private List<String> productsNotBelongsToParticularCategory;
-    private boolean productsNotBelongsToParticularCategorySet;
+    @QueryParam("created-on-weekend")
+    private Boolean createdOnWeekEnd;
 
-    private boolean createdOnWeekEnd;
-    private boolean createdOnWeekEndSet;
+    @QueryParam("created-on-month")
+    private String createdOnSameMonthDifferentYear;
 
-    private List<String> createdOnSameMonthDifferentYear;
-    private boolean createdOnSameMonthDifferentYearSet;
+    @QueryParam("columns")
+    private String columns;
 
-    private List<String> columns;
-    private boolean columnsSet;
+    @QueryParam("price-null-or-unavailable")
+    private Boolean priceNullOrUnAvailable;
+
+    @QueryParam("belongs")
+    private Boolean belongsToCategory;
+
+    @QueryParam("find-max-before-date")
+    private Boolean findMax;
 
 
-    private boolean priceNullOrUnAvailable;
 
-    public List<LocalDate> getCreatedAfterDate() {
-        if (createdAfterDate == null || createdAfterDate.isEmpty()) {
-            createdAfterDateSet = false;
-        }
+    public LocalDate getCreatedAfterDate() {
         return createdAfterDate;
     }
 
-    public void setCreatedAfterDate(List<LocalDate> createdAfterDate) {
-        this.createdAfterDate = createdAfterDate;
-        this.createdAfterDateSet = true;
+    public boolean hasCreatedAfterDate() {
+        return createdAfterDate != null;
     }
 
-    public boolean isCreatedAfterDateSet() {
-        return createdAfterDateSet;
-    }
-
-    public List<Integer> getCreatedOnYear() {
-        if (createdOnYear == null || createdOnYear.isEmpty()) {
-            createdOnYearSet = false;
-        }
+    public Integer getCreatedOnYear() {
         return createdOnYear;
     }
 
-    public void setCreatedOnYear(List<Integer> createdOnYear) {
-        this.createdOnYear = createdOnYear;
-        this.createdOnYearSet = true;
+    public boolean hasCreatedOnYear() {
+        return createdOnYear != null;
     }
 
-    public boolean isCreatedOnYearSet() {
-        return createdOnYearSet;
-    }
-
-    public List<LocalDate> getCreatedBeforeDate() {
-        if (createdBeforeDate == null || createdBeforeDate.isEmpty()) {
-            createdBeforeDateSet = false;
-        }
+    public LocalDate getCreatedBeforeDate() {
         return createdBeforeDate;
     }
 
-    public void setCreatedBeforeDate(List<LocalDate> createdBeforeDate) {
-        this.createdBeforeDate = createdBeforeDate;
-        this.createdBeforeDateSet = true;
+    public boolean hasCreatedBeforeDate() {
+        return createdBeforeDate != null;
     }
 
-    public boolean isCreatedBeforeDateSet() {
-        return createdBeforeDateSet;
-    }
-
-    public List<Integer> getPriceLessThan() {
-        if (priceLessThan == null || priceLessThan.isEmpty()) {
-            priceLessThanSet = false;
-        }
+    public Integer getPriceLessThan() {
         return priceLessThan;
     }
 
-    public void setPriceLessThan(List<Integer> priceLessThan) {
-        this.priceLessThan = priceLessThan;
-        this.priceLessThanSet = true;
+    public boolean hasPriceLessThan() {
+        return priceLessThan != null;
     }
 
-    public boolean isPriceLessThanSet() {
-        return priceLessThanSet;
-    }
-
-    public List<Integer> getPriceGreaterThan() {
-        if (priceGreaterThan == null || priceGreaterThan.isEmpty()) {
-            priceGreaterThanSet = false;
-        }
+    public Integer getPriceGreaterThan() {
         return priceGreaterThan;
     }
 
-    public void setPriceGreaterThan(List<Integer> priceGreaterThan) {
-        this.priceGreaterThan = priceGreaterThan;
-        this.priceGreaterThanSet = true;
+    public boolean hasPriceGreaterThan() {
+        return priceGreaterThan != null;
     }
 
-    public boolean isPriceGreaterThanSet() {
-        return priceGreaterThanSet;
+    public String getCategory() {
+        return category;
     }
 
-    public List<String> getProductsNotBelongsToParticularCategory() {
-        if (productsNotBelongsToParticularCategory == null || productsNotBelongsToParticularCategory.isEmpty()) {
-            productsNotBelongsToParticularCategorySet = false;
-        }
-        return productsNotBelongsToParticularCategory;
+    public boolean hasCategory() {
+        return category != null && !category.isBlank();
     }
 
-    public void setProductsNotBelongsToParticularCategory(List<String> productsNotBelongsToParticularCategory) {
-        this.productsNotBelongsToParticularCategory = productsNotBelongsToParticularCategory;
-        this.productsNotBelongsToParticularCategorySet = true;
-    }
-
-    public boolean isProductsNotBelongsToParticularCategorySet() {
-        return productsNotBelongsToParticularCategorySet;
-    }
-
-    public boolean isCreatedOnWeekEnd() {
+    public Boolean getCreatedOnWeekEnd() {
         return createdOnWeekEnd;
     }
 
-    public void setCreatedOnWeekEnd(boolean createdOnWeekEnd) {
-        this.createdOnWeekEnd = createdOnWeekEnd;
-        this.createdOnWeekEndSet = true;
+    public boolean hasCreatedOnWeekEnd() {
+        return createdOnWeekEnd != null;
     }
 
-    public boolean isCreatedOnWeekEndSet() {
-        return createdOnWeekEndSet;
-    }
-
-    public List<String> getCreatedOnSameMonthDifferentYear() {
-        if (createdOnSameMonthDifferentYear == null || createdOnSameMonthDifferentYear.isEmpty()) {
-            createdOnSameMonthDifferentYearSet = false;
-        }
+    public String getCreatedOnSameMonthDifferentYear() {
         return createdOnSameMonthDifferentYear;
     }
 
-    public void setCreatedOnSameMonthDifferentYear(List<String> createdOnSameMonthDifferentYear) {
-        this.createdOnSameMonthDifferentYear = createdOnSameMonthDifferentYear;
-        this.createdOnSameMonthDifferentYearSet = true;
+    public boolean hasCreatedOnSameMonthDifferentYear() {
+        return createdOnSameMonthDifferentYear != null && !createdOnSameMonthDifferentYear.isBlank();
     }
 
-    public boolean isCreatedOnSameMonthDifferentYearSet() {
-        return createdOnSameMonthDifferentYearSet;
-    }
-
-    public List<String> getColumns() {
-        if (columns == null || columns.isEmpty()) {
-            columnsSet = false;
-        }
+    public String getColumns() {
         return columns;
     }
 
-    public void setColumns(List<String> columns) {
-        this.columns = columns;
-        this.columnsSet = true;
+    public boolean hasColumns() {
+        return columns != null && !columns.isBlank();
     }
 
-    public boolean isColumnsSet() {
-        return columnsSet;
-    }
-    public boolean isPriceNullOrUnAvailable() {
+    public Boolean getPriceNullOrUnAvailable() {
         return priceNullOrUnAvailable;
     }
 
-    public void setPriceNullOrUnAvailable(boolean priceNullOrUnAvailable) {
-        this.priceNullOrUnAvailable = priceNullOrUnAvailable;
+    public boolean hasPriceNullOrUnAvailable() {
+        return priceNullOrUnAvailable != null && priceNullOrUnAvailable;
     }
 
+    public Boolean getBelongsToCategory() {
+        return belongsToCategory;
+    }
+
+    public boolean hasBelongsToCategory() {
+        return belongsToCategory != null;
+    }
+
+    public Boolean getFindMax() {
+        return findMax;
+    }
+
+    public boolean hasFindMax() {
+        return findMax != null && findMax;
+    }
 }

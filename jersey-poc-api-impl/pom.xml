@@ -13,14 +13,44 @@
     <artifactId>jersey-poc-api-impl</artifactId>
 <dependencies>
     <dependency>
-        <groupId>org.hibernate.orm</groupId>
-        <artifactId>hibernate-core</artifactId>
-        <version>6.6.13.Final</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <version> 3.4.5</version>
     </dependency>
     <dependency>
         <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <scope>runtime</scope>
+        <optional>true</optional>
+        <version>3.4.5</version>
+    </dependency>
+
+<!--    <dependency>-->
+<!--        <groupId>org.antlr</groupId>-->
+<!--        <artifactId>antlr4-runtime</artifactId>-->
+<!--        <version>4.13.1</version>-->
+<!--    </dependency>-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+        <version>3.4.5</version>
+    </dependency>
+<!--    <dependency>-->
+<!--        <groupId>org.hibernate.orm</groupId>-->
+<!--        <artifactId>hibernate-core</artifactId>-->
+<!--        <version>6.6.13.Final</version>-->
+
+
+<!--    </dependency>-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-jersey</artifactId>
-        <version>3.3.4</version>
+        <version>3.4.5</version>
+    </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.7.5</version>
     </dependency>
     <dependency>
         <groupId>org.poc.api</groupId>
@@ -30,8 +60,7 @@
     <dependency>
         <groupId>org.hibernate.orm</groupId>
         <artifactId>hibernate-jpamodelgen</artifactId>
-        <version>6.4.4.Final</version>
-        <scope>provided</scope>
+        <version>6.6.1.Final</version>
     </dependency>
 
     <dependency>
@@ -40,6 +69,34 @@
         <version>3.4.5</version>
     </dependency>
 </dependencies>
+    <build>
+        <plugins>
+            <!-- Enable annotation processing for jpamodelgen -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.bsc.maven</groupId>
+                <artifactId>maven-processor-plugin</artifactId>
+                <version>5.0-rc2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <processors>
+                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+                    </processors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
     <properties>
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>

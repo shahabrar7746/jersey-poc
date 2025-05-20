@@ -1,16 +1,22 @@
 package org.poc.api.impl.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.persistence.metamodel.StaticMetamodel;
 import lombok.Data;
-import org.poc.api.impl.enums.EnumCategory;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.List;
 
-@Entity
+
 @Table(name = "product")
-@Data
+@Getter
+@Setter
+@Entity
 public class Product {
 
     @Id
@@ -26,7 +32,18 @@ public class Product {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
+    @CreationTimestamp
+    @JsonFormat(pattern = "dd/MMM/yyyy", locale = "en")
+    @Column(name = "created_on")
+    private LocalDate createdOn;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private List<Category> categories;
+
 
 }
